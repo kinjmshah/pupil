@@ -69,25 +69,25 @@ We recommend using a [virtual environment](https://docs.python.org/3/tutorial/ve
 # Upgrade pip to latest version. This is necessary for some dependencies.
 python -m pip install --upgrade pip
 
-pip install cysignals
-pip install cython
-pip install msgpack==0.5.6
-pip install numexpr
-pip install packaging
-pip install psutil
-pip install pyaudio
-pip install pyopengl
-pip install pyzmq
-pip install scikit-learn
-pip install scipy
-pip install git+https://github.com/zeromq/pyre
+pip3 install cysignals
+pip3 install cython
+pip3 install msgpack==0.5.6
+pip3 install numexpr
+pip3 install packaging
+pip3 install psutil
+pip3 install pyaudio
+pip3 install pyopengl
+pip3 install pyzmq
+pip3 install scikit-learn
+pip3 install scipy
+pip3 install git+https://github.com/zeromq/pyre
 
-pip install pupil-apriltags
-pip install pupil-detectors
-pip install git+https://github.com/pupil-labs/PyAV
-pip install git+https://github.com/pupil-labs/pyuvc
-pip install git+https://github.com/pupil-labs/pyndsi
-pip install git+https://github.com/pupil-labs/pyglui
+pip3 install pupil-apriltags
+pip3 install pupil-detectors
+pip3 install git+https://github.com/pupil-labs/PyAV
+pip3 install git+https://github.com/pupil-labs/pyuvc
+pip3 install git+https://github.com/pupil-labs/pyndsi
+pip3 install git+https://github.com/pupil-labs/pyglui
 ```
 
 **NOTE:** Installing **pyglui** might fail on newer versions of **macOS** due to missing OpenGL headers. In this case, you need to install Xcode which comes with the required header files.
