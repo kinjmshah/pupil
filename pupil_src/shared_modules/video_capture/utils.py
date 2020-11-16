@@ -13,6 +13,7 @@ import os
 import pathlib as pl
 import typing as T
 from pathlib import Path
+import re
 
 
 import av
@@ -262,9 +263,29 @@ class Video:
         # TODO: what if adjacent timestamps are negative/zero as well?
         time_diff = np.diff(timestamps)
         invalid_idc = np.flatnonzero(time_diff < 0)
+
+        has_invalid_idc = invalid_idc.shape[0] > 0
+        if not has_invalid_idc:
+            return timestamps
+
+        # Check edge case where last timestamp causes negative jump
+        last_ts_is_invalid = invalid_idc[-1] == timestamps.shape[0] - 2
+        if last_ts_is_invalid:
+            # We cannot calculate the mean of adjacent timestamps as the last timestamp
+            # only has a single neighbour. Therefore, we will exclude it from the
+            # general time interpolation and handle this special case afterward.
+            invalid_idc = invalid_idc[:-1]
+
         timestamps[invalid_idc + 1] = np.mean(
             (timestamps[invalid_idc + 2], timestamps[invalid_idc]), axis=0
         )
+
+        if last_ts_is_invalid:
+            # After fixing all previous timestamps, we will now fix the last one
+            last_minus_two, last_minus_one = timestamps[[-3, -2]]
+            time_diff = last_minus_one - last_minus_two
+            timestamps[-1] = last_minus_one + time_diff
+
         return timestamps
 
 
@@ -498,10 +519,12 @@ def pi_gaze_items(root_dir):
     # This pattern will match any filename that:
     # - starts with "gaze ps"
     # - is followed by one or more digits
-    # - is followed by "_timestamps.npy"
-    gaze_timestamp_pattern = "gaze ps[0-9]*_timestamps.npy"
+    # - ends with "_timestamps.npy"
+    gaze_timestamp_paths = matched_files_by_name_pattern(
+        pl.Path(root_dir), r"^gaze ps[0-9]+_timestamps.npy$"
+    )
 
-    for timestamps_path in pl.Path(root_dir).glob(gaze_timestamp_pattern):
+    for timestamps_path in gaze_timestamp_paths:
         raw_path = find_raw_path(timestamps_path)
         timestamps = load_timestamps_data(timestamps_path)
         raw_data = load_raw_data(raw_path)
@@ -526,3 +549,10 @@ def pi_gaze_items(root_dir):
             conf_data = (1.0 for _ in range(len(timestamps)))
 
         yield from zip(raw_data, timestamps, conf_data)
+
+
+def matched_files_by_name_pattern(parent_dir: Path, name_pattern: str) -> T.List[Path]:
+    # Get all non-recursive directory contents
+    contents = filter(Path.is_file, parent_dir.iterdir())
+    # Filter content that matches the name by regex pattern
+    return [c for c in contents if re.match(name_pattern, c.name) is not None]

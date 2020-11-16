@@ -7,7 +7,7 @@ Most of this works via **apt**! Just copy paste into the terminal and listen to 
 ## General Dependencies
 
 ```sh
-sudo apt install -y pkg-config git cmake build-essential nasm wget python3-setuptools libusb-1.0-0-dev  python3-dev python3-pip python3-numpy python3-scipy libglew-dev libglfw3-dev libtbb-dev
+sudo apt install -y pkg-config git cmake build-essential nasm wget python3-setuptools libusb-1.0-0-dev  python3-dev python3-pip python3-numpy python3-scipy libglew-dev libtbb-dev
 
 # ffmpeg >= 3.2
 sudo apt install -y libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libavresample-dev ffmpeg x264 x265 libportaudio2 portaudio19-dev
@@ -63,31 +63,12 @@ sudo udevadm trigger
 
 ### Install Python Libraries
 
-We recommend using a [virtual environment](https://docs.python.org/3/tutorial/venv.html) for running Pupil.
+We recommend using a [virtual environment](https://docs.python.org/3/tutorial/venv.html) for running Pupil. To install all Python dependencies, you can use the [`requirements.txt`](https://github.com/pupil-labs/pupil/blob/master/requirements.txt) file from the root of the `pupil` repository.
 
 ```sh
 # Upgrade pip to latest version. This is necessary for some dependencies.
-python -m pip install --upgrade pip
-
-pip install cysignals
-pip install cython
-pip install msgpack==0.5.6
-pip install numexpr
-pip install packaging
-pip install psutil
-pip install pyaudio
-pip install pyopengl
-pip install pyzmq
-pip install scikit-learn
-pip install scipy
-pip install git+https://github.com/zeromq/pyre
-
-pip install pupil-apriltags
-pip install pupil-detectors
-pip install git+https://github.com/pupil-labs/PyAV
-pip install git+https://github.com/pupil-labs/pyuvc
-pip install git+https://github.com/pupil-labs/pyndsi
-pip install git+https://github.com/pupil-labs/pyglui
+python -m pip install --upgrade pip wheel
+pip install -r requirements.txt
 ```
 
 ### OpenCV Troubleshooting

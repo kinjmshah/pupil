@@ -15,6 +15,9 @@ from pyglui import ui
 from pyglui.cygl.utils import draw_gl_texture
 
 import glfw
+
+glfw.ERROR_REPORTING = "raise"
+
 from gl_utils import (
     adjust_gl_view,
     basic_gl_setup,
@@ -53,7 +56,9 @@ class Detector2DPlugin(PupilDetectorPlugin):
 
         debug_img = frame.bgr if self.g_pool.display_mode == "algorithm" else None
         result = self.detector_2d.detect(
-            gray_img=frame.gray, color_img=debug_img, roi=roi,
+            gray_img=frame.gray,
+            color_img=debug_img,
+            roi=roi,
         )
         eye_id = self.g_pool.eye_id
         location = result["location"]

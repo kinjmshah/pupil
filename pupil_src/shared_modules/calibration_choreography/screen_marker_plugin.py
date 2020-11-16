@@ -15,7 +15,11 @@ import cv2
 import numpy as np
 from gl_utils import adjust_gl_view, clear_gl_screen, basic_gl_setup
 import OpenGL.GL as gl
-from glfw import *
+
+import glfw
+
+glfw.ERROR_REPORTING = "raise"
+
 from circle_detector import CircleTracker
 from platform import system
 
@@ -188,8 +192,8 @@ class ScreenMarkerChoreographyPlugin(
         if isinstance(state, MarkerWindowStateIdle):
             assert self.__currently_shown_marker_position is None  # Sanity check
             if self.__current_list_of_markers_to_show:
-                self.__currently_shown_marker_position = self.__current_list_of_markers_to_show.pop(
-                    0
+                self.__currently_shown_marker_position = (
+                    self.__current_list_of_markers_to_show.pop(0)
                 )
                 logger.debug(
                     f"Moving screen marker to site at {self.__currently_shown_marker_position}"
