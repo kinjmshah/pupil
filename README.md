@@ -25,7 +25,7 @@ rel="noopener"
 target="_blank">
 	<p align="center">
 		<img 
-		src="https://raw.githubusercontent.com/wiki/pupil-labs/pupil/media/images/pupil_labs_pupil_core_app_download_banner.jpg" 
+		src="https://raw.githubusercontent.com/wiki/pupil-labs/pupil/media/images/pupil_labs_pupil_core_app_download_banner.png" 
 		alt="Download the latest Pupil Core Apps: Pupil Capture, Pupil Player, Pupil Service"/>
 	</p>
 </a>
@@ -61,17 +61,6 @@ cd pupil
 _Note_: If you are using Windows, you will have to complete a few more steps after cloning the repo. Please refer to the [Windows 10 dependencies setup guide](./docs/dependencies-windows.md "Pupil dependency installation for Windows 10").
 
 ### Run Pupil
-
-#### Windows
-
-```powershell
-cd pupil_src
-run_capture.bat
-# or run_player.bat
-# or run_service.bat
-```
-
-#### macOS/Linux
 
 ```sh
 cd pupil_src

@@ -73,8 +73,9 @@ def player(
 
         # display
         import glfw
+        from gl_utils import GLFWErrorReporting
 
-        glfw.ERROR_REPORTING = "raise"
+        GLFWErrorReporting.set_default()
 
         # check versions for our own depedencies as they are fast-changing
         from pyglui import __version__ as pyglui_version
@@ -137,7 +138,7 @@ def player(
         )
 
         assert parse_version(pyglui_version) >= parse_version(
-            "1.28"
+            "1.29"
         ), "pyglui out of date, please upgrade to newest version"
 
         process_was_interrupted = False
@@ -337,6 +338,7 @@ def player(
         # create container for globally scoped vars
         g_pool = SimpleNamespace()
         g_pool.app = "player"
+        g_pool.process = "player"
         g_pool.zmq_ctx = zmq_ctx
         g_pool.ipc_pub = ipc_pub
         g_pool.ipc_pub_url = ipc_pub_url
@@ -373,7 +375,6 @@ def player(
         glfw.init()
         glfw.window_hint(glfw.SCALE_TO_MONITOR, glfw.TRUE)
         main_window = glfw.create_window(width, height, window_name, None, None)
-
         window_position_manager = gl_utils.WindowPositionManager()
         window_pos = window_position_manager.new_window_position(
             window=main_window,
@@ -807,8 +808,9 @@ def player_drop(
 
     try:
         import glfw
+        from gl_utils import GLFWErrorReporting
 
-        glfw.ERROR_REPORTING = "raise"
+        GLFWErrorReporting.set_default()
 
         import gl_utils
         from OpenGL.GL import glClearColor
